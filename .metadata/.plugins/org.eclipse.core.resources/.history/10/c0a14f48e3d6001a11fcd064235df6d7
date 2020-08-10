@@ -1,0 +1,38 @@
+package a20_8_5;
+
+class Car {
+		protected String model;
+		protected String color;
+		public Car() {}
+		public Car(String model, String color) {
+			this.model=model;
+			this.color=color;
+		}
+		public void show() {
+			System.out.println("¸ðµ¨¸í="+model+",Ä®¶ó="+color);
+		}
+}
+
+class Taxi extends Car {
+	private Boolean TaxiMeter;
+	private int TaxiFare=3300;
+	public Taxi() {
+		super();
+	}
+	public Taxi(String model, String color) {
+		super(model, color);
+	}
+	public Taxi(String model, String color, Boolean taxiMeter, int taxiFare) {
+		super(model, color);
+		TaxiMeter = taxiMeter;
+		TaxiFare = taxiFare;
+	}
+	
+}
+
+public class TaxiTest {
+	public static void main(String[] args) {
+		
+		
+	}
+}

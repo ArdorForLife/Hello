@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;a20_7_8.ch06ex06&apos; to &apos;ch06ex01&apos;&#x0D;&#x0A;- Original project: &apos;a20_7_8&apos;&#x0D;&#x0A;- Original element: &apos;a20_7_8.ch06ex06&apos;&#x0D;&#x0A;- Renamed element: &apos;a20_7_8.ch06ex01&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;ch06ex06&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;a20_7_8{ch06ex06.java[ch06ex06" matchStrategy="1" name="ch06ex01" qualified="false" references="true" similarDeclarations="false" stamp="1594185588929" textual="false" version="1.0"/>
+</session>

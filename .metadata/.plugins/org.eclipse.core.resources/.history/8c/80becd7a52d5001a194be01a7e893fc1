@@ -1,0 +1,10 @@
+package test;
+
+public class rectangle extends shape {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

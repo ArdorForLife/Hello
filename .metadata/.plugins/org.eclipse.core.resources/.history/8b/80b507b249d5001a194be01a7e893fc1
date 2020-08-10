@@ -1,0 +1,17 @@
+
+public class ºØ¾î»§ {
+	private int ºØ¾îÆ²;
+	private int ¹ÝÁ×;
+	private int ÆÏ;
+	public void show() {
+		System.out.println(ºØ¾îÆ²);
+	}
+	public void ¸¸µé±â() {
+		ºØ¾îÆ²=¹ÝÁ×+ÆÏ+¹ÝÁ×;
+	}
+	public ºØ¾î»§() {}
+	public ºØ¾î»§(int ¹ÝÁ×, int ÆÏ) {
+		this.¹ÝÁ×=¹ÝÁ×;
+		this.ÆÏ=ÆÏ;
+	}
+}

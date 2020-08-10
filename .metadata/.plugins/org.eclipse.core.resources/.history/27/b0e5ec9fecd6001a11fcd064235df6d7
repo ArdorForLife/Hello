@@ -1,0 +1,19 @@
+package a20_8_5;
+
+public class MainTest {
+	public static void poly(Shape n) {
+	}
+	
+	public static void main(String[] args) {
+		Circle c=new Circle();
+		poly(c);
+		
+		
+		Rectangle r=new Rectangle();
+		poly(r);
+		
+		Triangle t=new Triangle();
+		poly(t);
+	}
+
+}

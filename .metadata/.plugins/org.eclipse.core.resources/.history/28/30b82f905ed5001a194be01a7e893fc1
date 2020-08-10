@@ -1,0 +1,18 @@
+package test3;
+
+public class MaxTest {
+
+		
+		public static void main(String[] args) {
+			String num1=args[0]; //문자열 
+			String num2=args[1]; //문자열
+			
+			int n1=Integer.valueOf(num1);
+			int n2=Integer.valueOf(num2);
+			
+			sam ss=new sam();
+			
+			int res=ss.max(n1, n2);
+			System.out.println("최대값="+res);
+		}
+}

@@ -1,0 +1,12 @@
+package test;
+
+public class circle extends shape {
+		protected int r;
+		public void area() {
+			res=(int) (r*r*Math.PI);
+		}
+		public circle() {}
+		public circle(int r) {
+			this.r=r;
+		}
+}

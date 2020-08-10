@@ -1,0 +1,10 @@
+
+public class a_3_2020_08_05_10171 {
+
+	public static void main(String[] args) {
+		System.out.println("\\    /\\");
+		System.out.println(" )  ( ')");
+		System.out.println("(  / )");
+	}
+
+}

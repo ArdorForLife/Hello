@@ -1,0 +1,12 @@
+package a20_8_5;
+
+public class MainTest {
+
+	public static void main(String[] args) {
+		Circle c=new Circle();
+		c.setR(5);
+		c.area();
+		c.show();
+	}
+
+}

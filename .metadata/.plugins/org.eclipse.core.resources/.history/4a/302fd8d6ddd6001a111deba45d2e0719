@@ -1,0 +1,18 @@
+package a20_8_5;
+
+class Car {
+		protected String model;
+		protected String color;
+}
+
+class Taxi extends Car {
+	private Boolean TaxiMeter;
+	private int TaxiFare=3300;
+}
+
+public class TaxiTest {
+	public static void main(String[] args) {
+		
+		
+	}
+}

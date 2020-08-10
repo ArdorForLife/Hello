@@ -1,0 +1,29 @@
+package a20_8_5;
+
+public class MainTest {
+	public static void poly(int n) {
+		System.out.println("=");
+	}
+	public static void main(String[] args) {
+		Circle c=new Circle();
+		c.setR(5);
+		c.area();
+		c.show();
+		poly(5);
+		
+		Rectangle r=new Rectangle();
+		r.setW(10);
+		r.setH(5);
+		r.area();
+		r.show();
+		poly(10);
+		
+		Triangle t=new Triangle();
+		t.setW(10);
+		t.setH(5);
+		t.area();
+		t.show();
+		poly(20);
+	}
+
+}

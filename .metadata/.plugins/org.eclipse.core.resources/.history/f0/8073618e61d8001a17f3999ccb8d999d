@@ -1,0 +1,16 @@
+import java.util.Scanner;
+
+public class A00013_20_08_07_9498 {
+
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		int a=sc.nextInt();
+		sc.close();
+		
+		if(a>=90) System.out.println("A");
+		else if(a>=80) System.out.println("B");
+		
+		
+	}
+
+}

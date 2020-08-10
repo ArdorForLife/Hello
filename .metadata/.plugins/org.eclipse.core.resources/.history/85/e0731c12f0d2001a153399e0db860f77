@@ -1,0 +1,20 @@
+package a20_7_31;
+
+public class testQ7 {
+
+	public static void main(String[] args) {
+		int s,sa,sw;
+		s=0;
+		sa=0;
+		sw=0;
+		sa++;
+		for(int i=1;i<10;i++) {
+			if(sw==0) {s=s-sa; sw=1;}
+			else {s=s+sa; sw=0;}
+			i++;
+		}System.out.println(s);
+		
+		
+	}
+
+}

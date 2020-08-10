@@ -1,0 +1,16 @@
+
+public class °è¶õ»§ extends ºØ¾î»§ {
+	private int °è¶õÆ²;
+	private int °è¶õ;
+	public void show() {
+		System.out.println(°è¶õÆ²);
+	}
+	public void ¸¸µé±â2() {
+		°è¶õÆ²=¹ÝÁ×+°è¶õ+¹ÝÁ×;
+	}
+	public °è¶õ»§() { 	}
+	public °è¶õ»§(int °è¶õ, int ¹ÝÁ×) {
+		this.°è¶õ=°è¶õ;
+		this.¹ÝÁ×=¹ÝÁ×;
+	}
+}
