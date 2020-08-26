@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <typeInfoHistroy>
-<typeInfo handle="=a20_8_12/src&lt;REF형변환{Point.java[Point" modifiers="1" timestamp="1597209431941"/>
-<typeInfo handle="=a20_8_13/src&lt;{Shape.java[Shape" modifiers="1025" timestamp="1597295583702"/>
-<typeInfo handle="=a20_8_18/C:\/Program Files\/Java\/jre1.8.0_241\/lib\/rt.jar&lt;java.awt(Shape.class[Shape" modifiers="1537" timestamp="1592899942863"/>
-<typeInfo handle="=a20_8_18/src&lt;a20_8_18{Shape.java[Shape" modifiers="513" timestamp="1597726806443"/>
-<typeInfo handle="=a20_8_18/C:\/Program Files\/Java\/jre1.8.0_241\/lib\/rt.jar&lt;java.awt.peer(FramePeer.class[FramePeer" modifiers="1537" timestamp="1592899942863"/>
-<typeInfo handle="=a20_8_18/C:\/Program Files\/Java\/jre1.8.0_241\/lib\/rt.jar&lt;java.awt(Frame.class[Frame" modifiers="33" timestamp="1592899942863"/>
-<typeInfo handle="=a20_8_19_applet/C:\/Program Files\/Java\/jre1.8.0_241\/lib\/rt.jar&lt;java.applet(Applet.class[Applet" modifiers="33" timestamp="1592899942863"/>
+<typeInfo handle="=a20_8_25_event2/C:\/Program Files\/Java\/jre1.8.0_241\/lib\/rt.jar&lt;java.awt.event(ActionListener.class[ActionListener" modifiers="1537" timestamp="1593084452730"/>
+<typeInfo handle="=a20_8_25_event2/C:\/Program Files\/Java\/jre1.8.0_241\/lib\/rt.jar&lt;java.awt.event(ItemListener.class[ItemListener" modifiers="1537" timestamp="1593084452730"/>
+<typeInfo handle="=a20_8_25_event2/C:\/Program Files\/Java\/jre1.8.0_241\/lib\/rt.jar&lt;java.applet(Applet.class[Applet" modifiers="33" timestamp="1593084452730"/>
+<typeInfo handle="=a20_8_25_event2/C:\/Program Files\/Java\/jre1.8.0_241\/lib\/rt.jar&lt;java.awt.event(MouseListener.class[MouseListener" modifiers="1537" timestamp="1593084452730"/>
+<typeInfo handle="=a20_8_25_event2/C:\/Program Files\/Java\/jre1.8.0_241\/lib\/rt.jar&lt;java.awt.peer(MouseInfoPeer.class[MouseInfoPeer" modifiers="1537" timestamp="1593084452730"/>
+<typeInfo handle="=a20_8_25_event2/C:\/Program Files\/Java\/jre1.8.0_241\/lib\/rt.jar&lt;java.awt(Frame.class[Frame" modifiers="33" timestamp="1593084452730"/>
 </typeInfoHistroy>
