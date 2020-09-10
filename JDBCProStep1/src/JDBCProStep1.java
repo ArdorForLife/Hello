@@ -1,6 +1,9 @@
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -27,7 +30,20 @@ public class JDBCProStep1 implements ActionListener {
 	private static final int TOTAL=4;
 	int cmd=NONE;
 	
+	//db연결 위한 변수들
+	String driver = "oracle.jdbc.OracleDriver";
+	String url = "jdbc:oracle:thin:@127.0.0.1:1521:xe";
+	String user = "system";
+	String password = "tjswn452";
+	String sql = "select * from member where id=? and pwd=?";
+	Connection con = null;
+	PreparedStatement pstmt = null;
 	
+	String sqlTotal = "select * from customer";
+	String sqlInsert = "insert into customer values(?,?,?,?)";
+	String selDelete = "delete from customer where name = ?";
+	String sqlUpdate = "update customer set email=? tel=? where code=?";
+	String sqlSearch = "select * from customer where name=?";
 	
 	/**
 	 * Launch the application.
@@ -107,24 +123,28 @@ public class JDBCProStep1 implements ActionListener {
 		scrollPane.setViewportView(table);
 		
 		btnTotal = new JButton("\uC804\uCCB4\uBCF4\uAE30");	//전체보기
-		btnTotal.setBounds(12, 214, 93, 23);
+		btnTotal.setBounds(12, 214, 81, 23);
 		frame.getContentPane().add(btnTotal);
 		
 		btnCancel = new JButton("\uCDE8\uC18C");
-		btnCancel.setBounds(348, 214, 74, 23);
+		btnCancel.setBounds(360, 214, 74, 23);
 		frame.getContentPane().add(btnCancel);
 		
 		btnAdd = new JButton("\uCD94\uAC00");
-		btnAdd.setBounds(117, 214, 69, 23);
+		btnAdd.setBounds(97, 214, 57, 23);
 		frame.getContentPane().add(btnAdd);
 		
 		btnDel = new JButton("\uC0AD\uC81C");
-		btnDel.setBounds(198, 214, 69, 23);
+		btnDel.setBounds(155, 214, 57, 23);
 		frame.getContentPane().add(btnDel);
 		
 		btnSearch = new JButton("\uAC80\uC0C9");
-		btnSearch.setBounds(279, 214, 68, 23);
+		btnSearch.setBounds(214, 214, 62, 23);
 		frame.getContentPane().add(btnSearch);
+		
+		JButton btnUpdate = new JButton("\uC218\uC815");
+		btnUpdate.setBounds(291, 214, 57, 23);
+		frame.getContentPane().add(btnUpdate);
 		
 		//2단계 : 컴포넌트에 액션리스너를 추가한다
 		btnTotal.addActionListener(this);
@@ -133,6 +153,59 @@ public class JDBCProStep1 implements ActionListener {
 		btnSearch.addActionListener(this);
 		btnCancel.addActionListener(this);
 		
+	}
+	//추가버튼의 DB
+	//String sqlInsert = "insert into customer values(?,?,?,?)";
+	public void add() {
+		String no = txtNo.getText();
+		String name = txtName.getText();
+		String email = txtEmail.getText();
+		String tel = txtTel.getText();
+		System.out.println(no+","+name+","+email+","+tel);
+		try {
+			pstmt = con.prepareStatement(sqlInsert);
+			pstmt.setInt(1, Integer.valueOf(no));
+			pstmt.setString(2, name);
+			pstmt.setString(3, email);
+			pstmt.setString(4, tel);
+			int res = pstmt.executeUpdate();
+			if(res==1) System.out.println("성공");
+			else System.out.println("실패");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	
+	}
+	//삭제버튼의 DB
+	//String selDelete = "delete from customer where name = ?";
+	public void del() {
+		System.out.println("삭제");
+		System.out.println(txtName.getText());
+		try {
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	//검색버튼의 DB
+	public void search() {
+		System.out.println("검색");
+		System.out.println(txtName.getText());
+		try {
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	//전체보기버튼의 DB
+	public void total() {
+		System.out.println("전체보기");
+		System.out.println(txtName.getText());
+		try {
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	//3단계 : actionPerformed 구현한다
@@ -143,31 +216,44 @@ public class JDBCProStep1 implements ActionListener {
 				call(ADD);
 				return;
 			}
-			
 			frame.setTitle("추가");
-		} else if(e.getSource()==btnDel) { //삭제
+			add(); 					//db에 연결하여 추가작업이 동작됨
+		}
+		else if(e.getSource()==btnDel) { //삭제
 			if(cmd!=DELETE) {
 				call(DELETE);
 				return;
 			}
-			
 			frame.setTitle("삭제");
-		} else if(e.getSource()==btnSearch) { //검색
+			del();					//db에 연결하여 삭제작업
+		}
+		else if(e.getSource()==btnSearch) { //검색
 			if(cmd!=SEARCH) {
 				call(SEARCH);
 				return;
 			}
 			frame.setTitle("검색");
-		} else if(e.getSource()==btnTotal) { //전체검색
+			search();				//db에 연결하여 이름검색
+		}
+		else if(e.getSource()==btnTotal) { //전체검색
 			call(TOTAL);
 			frame.setTitle("전체보기");
+			total();				
 		} 
 		System.out.println("취소");
 		call(NONE);
 		init();
-		
+		dbcon();
 	}
-	
+
+	public void dbcon() {
+		try {
+			Class.forName(driver);
+			con=DriverManager.getConnection(url, user, password);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	private void init() {
 		txtNo.setText("");
@@ -178,20 +264,47 @@ public class JDBCProStep1 implements ActionListener {
 		txtName.setEditable(false);
 		txtEmail.setEditable(false);
 		txtTel.setEditable(false);
+		btnTotal.setEnabled(true);
+		btnAdd.setEnabled(true);
+		btnDel.setEnabled(true);
+		btnSearch.setEnabled(true);
+		btnCancel.setEnabled(true);
 	}
 
-	public void call(int cmd) {		//cmd=1,2,3
+	public void call(int command) {		//cmd=1,2,3
 		//텍스트필드의 편집상태 on,off
-		switch(cmd) {
+		btnTotal.setEnabled(false);
+		btnAdd.setEnabled(false);
+		btnDel.setEnabled(false);
+		btnSearch.setEnabled(false);
+		btnCancel.setEnabled(false);
+		switch(command) {
 		case ADD: 
 			txtNo.setEditable(true);
 			txtName.setEditable(true);
 			txtEmail.setEditable(true);
 			txtTel.setEditable(true);
+			
+			btnAdd.setEnabled(true);;
+			cmd=ADD;
 			break;
 		case DELETE:
+			txtName.setEditable(true);;
+			
+			btnDel.setEnabled(true);;
+			cmd=DELETE;
+			break;
 		case SEARCH:
 			txtName.setEditable(true);		//del과 search는 이름만 편집가능
+			
+			btnSearch.setEnabled(true);;
+			cmd=SEARCH;
+			break;
+		case TOTAL:
+			cmd=TOTAL;
+			break;
+		case NONE:
+			cmd=NONE;
 			break;
 		}
 		//버튼의 상태 on,off
@@ -212,6 +325,7 @@ public class JDBCProStep1 implements ActionListener {
 		case SEARCH:
 			btnSearch.setEnabled(true);
 			cmd=SEARCH;
+			break;
 		case TOTAL:
 			btnTotal.setEnabled(true);
 			cmd=TOTAL;
@@ -227,6 +341,4 @@ public class JDBCProStep1 implements ActionListener {
 		}
 		
 	}
-	
-	
 }
