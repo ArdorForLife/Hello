@@ -1,3 +1,5 @@
+drop table customer;
+
 create table customer(
 	code number(10) primary key,
 	name varchar(30) not null,

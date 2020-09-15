@@ -20,30 +20,31 @@ public class JDBCProstep11 implements ActionListener {
 	private JTextField txtName;
 	private JTextField txtEmail;
 	private JTextField txtTel;
+	private JTable table;
 	private JButton btnTotal, btnAdd, btnSearch, btnDel, btnCancel, btnUpdate;
 	
-	private static final int NONE=0;
-	private static final int ADD=1;
-	private static final int DELETE=2;
-	private static final int SEARCH=3;
-	private static final int TOTAL=4;
-	private static final int UPDATE=5;
+	private static final int NONE=0;			//취소
+	private static final int ADD=1;				//추가(insert)
+	private static final int DELETE=2;			//삭제(delete)
+	private static final int SEARCH=3;			//검색(select)
+	private static final int TOTAL=4;			//검색(select)
+	private static final int UPDATE=5;			//(update)
 	int cmd=NONE;
 	
 	String driver = "oracle.jdbc.OracleDriver";
 	String url = "jdbc:oracle:thin:@127.0.0.1:1521:xe";
 	String user = "system";
 	String password = "123456";
-	String sql = "select * from member where id=? and pwd=?";
+	
 	Connection con = null;
 	PreparedStatement pstmt = null;
 	
+	String sql = "select * from member where id=? and pwd=?";
 	String sqlTotal = "select * from customer";
 	String sqlInsert = "insert into customer values(?,?,?,?)";
 	String sqlDelete = "delete from customer where name = ?";
 	String sqlUpdate = "update customer set email=? tel=? where code=?";
 	String sqlSearch = "select * from customer where name=?";
-	private JTable table;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -61,6 +62,17 @@ public class JDBCProstep11 implements ActionListener {
 	public JDBCProstep11() {
 		initialize();
 		init();
+		dbcon();
+	}
+	
+	public void dbcon() {
+		try {
+			Class.forName(driver);
+			con=DriverManager.getConnection(url, user, password);
+			System.out.println("성공");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void initialize() {
@@ -106,6 +118,13 @@ public class JDBCProstep11 implements ActionListener {
 		frame.getContentPane().add(txtTel);
 		txtTel.setColumns(10);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(265, 41, 214, 164);
+		frame.getContentPane().add(scrollPane);
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
+		
 		btnTotal = new JButton("\uC804\uCCB4\uBCF4\uAE30");
 		btnTotal.setBounds(4, 267, 83, 23);
 		frame.getContentPane().add(btnTotal);
@@ -126,17 +145,11 @@ public class JDBCProstep11 implements ActionListener {
 		btnCancel.setBounds(352, 267, 83, 23);
 		frame.getContentPane().add(btnCancel);
 		
-		btnUpdate = new JButton("\uAC31\uC2E0");
+		btnUpdate = new JButton("\uC218\uC815");
 		btnUpdate.setBounds(439, 267, 83, 23);
 		frame.getContentPane().add(btnUpdate);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(265, 41, 214, 164);
-		frame.getContentPane().add(scrollPane);
-		
-		table = new JTable();
-		scrollPane.setViewportView(table);
-		
+		//2단계 : 컴포넌트에 액션리스너를 추가한다
 		btnTotal.addActionListener(this);
 		btnAdd.addActionListener(this);
 		btnDel.addActionListener(this);
@@ -145,6 +158,8 @@ public class JDBCProstep11 implements ActionListener {
 		btnUpdate.addActionListener(this);
 	}
 	
+	//추가버튼의 DB
+	//String sqlInsert = "insert into customer values(?,?,?,?)";
 	public void add() {
 		String no = txtNo.getText();
 		String name = txtName.getText();
@@ -165,29 +180,54 @@ public class JDBCProstep11 implements ActionListener {
 		}
 	}
 	
+	//삭제버튼의 DB
+	//String sqlDelete = "delete from customer where name = ?";
 	public void del() {
-		System.out.println("삭제");
 		System.out.println(txtName.getText());
 		try {
-			
+			String name = txtName.getText();			//txtName의 값을 가져오기
+			pstmt = con.prepareStatement(sqlDelete);	//준비된 선언에 문법을 넣어놓음
+			pstmt.setString(1,  name);					//첫번째로 name을 가져와서 1번 물음표에 넣어라
+			int res = pstmt.executeUpdate();
+			if(res==1) System.out.println("삭제되었습니다.");
+			else System.out.println("실패했습니다.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
+	//검색버튼의 DB
+	//String sqlSearch = "select * from customer where name=?";
 	public void search() {
-		System.out.println("검색");
 		System.out.println(txtName.getText());
 		try {
-			
+			String name = txtName.getText();
+			pstmt = con.prepareStatement(sqlSearch);
+			pstmt.setString(1, name);
+			int res = pstmt.executeUpdate();
+			if(res==1) System.out.println("검색성공");
+			else System.out.println("검색실패");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
+	//전체보기버튼의 DB
+	//String sqlTotal = "select * from customer";
 	public void total() {
 		System.out.println("전체보기");
 		System.out.println(txtName.getText());
+		try {
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//수정버튼의 DB
+	//String sqlUpdate = "update customer set email=? tel=? where code=?";
+	public void update() {
+		System.out.println("수정");
 		try {
 			
 		} catch (Exception e) {
@@ -228,17 +268,8 @@ public class JDBCProstep11 implements ActionListener {
 		System.out.println("취소");
 		call(NONE);
 		init();
-		dbcon();
 	}
-	public void dbcon() {
-		try {
-			Class.forName(driver);
-			con=DriverManager.getConnection(url, user, password);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
+		
 	private void init() {
 		txtNo.setText("");
 		txtName.setText("");
@@ -261,7 +292,7 @@ public class JDBCProstep11 implements ActionListener {
 		btnAdd.setEnabled(false);
 		btnDel.setEnabled(false);
 		btnSearch.setEnabled(false);
-		btnCancel.setEnabled(false);
+		btnCancel.setEnabled(true);
 		btnUpdate.setEnabled(false);
 		switch(command) {
 		case ADD:

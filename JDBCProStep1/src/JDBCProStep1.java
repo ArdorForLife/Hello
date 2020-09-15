@@ -332,6 +332,5 @@ public class JDBCProStep1 implements ActionListener {
 			cmd=NONE;
 			break;
 		}
-		
 	}
 }
