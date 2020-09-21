@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -31,19 +32,23 @@ public class JDBCProstep11 implements ActionListener {
 	private static final int UPDATE=5;			//(update)
 	int cmd=NONE;
 	
+	MyModel model;
+	
+	//DB연결을 위한 변수들
 	String driver = "oracle.jdbc.OracleDriver";
 	String url = "jdbc:oracle:thin:@127.0.0.1:1521:xe";
 	String user = "system";
 	String password = "123456";
-	
 	Connection con = null;
 	PreparedStatement pstmt = null;
+	PreparedStatement pstmtTotal, pstmtTotalScroll;
+	PreparedStatement pstmtSearch, pstmtSearchScroll;
 	
 	String sql = "select * from member where id=? and pwd=?";
 	String sqlTotal = "select * from customer";
 	String sqlInsert = "insert into customer values(?,?,?,?)";
 	String sqlDelete = "delete from customer where name = ?";
-	String sqlUpdate = "update customer set email=? tel=? where code=?";
+	String sqlUpdate = "update customer set email=?, tel=? where code=?";
 	String sqlSearch = "select * from customer where name=?";
 	
 	public static void main(String[] args) {
@@ -142,11 +147,11 @@ public class JDBCProstep11 implements ActionListener {
 		frame.getContentPane().add(btnSearch);
 		
 		btnCancel = new JButton("\uCDE8\uC18C");
-		btnCancel.setBounds(352, 267, 83, 23);
+		btnCancel.setBounds(445, 267, 83, 23);
 		frame.getContentPane().add(btnCancel);
 		
 		btnUpdate = new JButton("\uC218\uC815");
-		btnUpdate.setBounds(439, 267, 83, 23);
+		btnUpdate.setBounds(353, 267, 83, 23);
 		frame.getContentPane().add(btnUpdate);
 		
 		//2단계 : 컴포넌트에 액션리스너를 추가한다
@@ -177,6 +182,12 @@ public class JDBCProstep11 implements ActionListener {
 			else System.out.println("실패");
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();	
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
 		}
 	}
 	
@@ -193,6 +204,12 @@ public class JDBCProstep11 implements ActionListener {
 			else System.out.println("실패했습니다.");
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
 		}
 	}
 	
@@ -202,13 +219,28 @@ public class JDBCProstep11 implements ActionListener {
 		System.out.println(txtName.getText());
 		try {
 			String name = txtName.getText();
-			pstmt = con.prepareStatement(sqlSearch);
-			pstmt.setString(1, name);
-			int res = pstmt.executeUpdate();
-			if(res==1) System.out.println("검색성공");
-			else System.out.println("검색실패");
+			pstmtSearchScroll = con.prepareStatement(sqlSearch,ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+			pstmtSearch = con.prepareStatement(sqlSearch);
+			pstmtSearchScroll.setString(1, name);
+			pstmtSearch.setString(1, name);
+			
+			ResultSet rsScroll = pstmtSearchScroll.executeQuery();
+			ResultSet rs = pstmtSearch.executeQuery();
+			if(model==null) model = new MyModel();
+			model.getRowCount(rsScroll);
+			model.setData(rs);
+			table.setModel(model);
+			table.updateUI();
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				pstmtSearchScroll.close();
+				pstmtSearch.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+			
 		}
 	}
 	
@@ -218,20 +250,51 @@ public class JDBCProstep11 implements ActionListener {
 		System.out.println("전체보기");
 		System.out.println(txtName.getText());
 		try {
+			pstmtTotalScroll = con.prepareStatement(sqlTotal,ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+			pstmtTotal = con.prepareStatement(sqlTotal);
 			
+			ResultSet rsScroll = pstmtTotalScroll.executeQuery();
+			ResultSet rs = pstmtTotal.executeQuery();
+			if(model==null) model = new MyModel();
+			model.getRowCount(rsScroll);
+			model.setData(rs);
+			table.setModel(model);
+			table.updateUI();
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				pstmtTotalScroll.close();
+				pstmtTotal.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
 		}
 	}
 	
 	//수정버튼의 DB
-	//String sqlUpdate = "update customer set email=? tel=? where code=?";
+	//String sqlUpdate = "update customer set email=?, tel=? where code=?";
 	public void update() {
 		System.out.println("수정");
+		String no = txtNo.getText();			
+		String email = txtEmail.getText();
+		String tel = txtTel.getText();
 		try {
-			
+			pstmt = con.prepareStatement(sqlUpdate);	
+			pstmt.setString(1, email);
+			pstmt.setString(2, tel);
+			pstmt.setInt(3, Integer.valueOf(no));
+			int res = pstmt.executeUpdate();
+			if(res==1) System.out.println("수정되었습니다.");
+			else System.out.println("실패했습니다.");
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
 		}
 	}
 	
@@ -243,6 +306,7 @@ public class JDBCProstep11 implements ActionListener {
 			}
 			frame.setTitle("추가");
 			add();
+			total();
 		}
 		else if(e.getSource()==btnDel) {
 			if(cmd!=DELETE) {
@@ -251,6 +315,7 @@ public class JDBCProstep11 implements ActionListener {
 			}
 			frame.setTitle("삭제");
 			del();
+			total();
 		}
 		else if(e.getSource()==btnSearch) {
 			if(cmd!=SEARCH) {
@@ -260,11 +325,21 @@ public class JDBCProstep11 implements ActionListener {
 			frame.setTitle("검색");
 			search();
 		}
+		else if(e.getSource()==btnUpdate) {
+			if(cmd!=UPDATE) {
+				call(UPDATE);
+				return;
+			}
+			frame.setTitle("수정");
+			update();
+			total();
+		}
 		else if(e.getSource()==btnTotal) {
 			call(TOTAL);
 			frame.setTitle("전체보기");
 			total();
 		}
+		
 		System.out.println("취소");
 		call(NONE);
 		init();
@@ -287,7 +362,7 @@ public class JDBCProstep11 implements ActionListener {
 		btnUpdate.setEnabled(true);
 	}
 	
-	public void call(int command) {
+	public void call(int command) {			//cmd=1,2,3,4,5
 		btnTotal.setEnabled(false);
 		btnAdd.setEnabled(false);
 		btnDel.setEnabled(false);
@@ -316,43 +391,18 @@ public class JDBCProstep11 implements ActionListener {
 			btnSearch.setEnabled(true);
 			cmd=SEARCH;
 			break;
-		case TOTAL:
-			cmd=TOTAL;
-			break;
-		case NONE:
-			cmd=NONE;
-			break;
-		}
-		btnTotal.setEnabled(false);
-		btnAdd.setEnabled(false);
-		btnDel.setEnabled(false);
-		btnSearch.setEnabled(false);
-		btnUpdate.setEnabled(false);
-		
-		switch(cmd) {
-		case ADD:
-			btnAdd.setEnabled(true);
-			cmd=ADD;
-			break;
-		case DELETE:
-			btnDel.setEnabled(true);
-			cmd=DELETE;
-			break;
-		case SEARCH:
-			btnSearch.setEnabled(true);
-			cmd=SEARCH;
-			break;
-		case TOTAL:
-			btnTotal.setEnabled(true);
-			cmd=TOTAL;
-			break;
-		case NONE:
-			btnTotal.setEnabled(true);
-			btnAdd.setEnabled(true);
-			btnDel.setEnabled(true);
-			btnSearch.setEnabled(true);
-			btnCancel.setEnabled(true);
+		case UPDATE:
+			txtNo.setEditable(true);
+			txtEmail.setEditable(true);
+			txtTel.setEditable(true);
+			
 			btnUpdate.setEnabled(true);
+			cmd=UPDATE;
+			break;
+		case TOTAL:
+			cmd=TOTAL;
+			break;
+		case NONE:
 			cmd=NONE;
 			break;
 		}
