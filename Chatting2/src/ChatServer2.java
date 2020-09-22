@@ -2,7 +2,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.Vector;
 
-public class ChatServer
+public class ChatServer2
 {
 	Vector clientVector = new Vector();
 	int clientNum = 0;
@@ -11,7 +11,7 @@ public class ChatServer
 	{
 		synchronized(clientVector) {
 			for(int i=0;i<clientVector.size();i++) { //접속한 클라이언트 수만큼
-				ChatThread client = (ChatThread) clientVector.elementAt(i);
+				ChatThread2 client = (ChatThread2) clientVector.elementAt(i);
 					//모든 클라이언트에게 메시지 보냄
 				synchronized(client) {
 					client.sendMessage(msg);
@@ -20,7 +20,7 @@ public class ChatServer
 		}
 	}
 	
-	public void removeClient(ChatThread client)
+	public void removeClient(ChatThread2 client)
 	{
 		synchronized(clientVector) {
 			clientVector.removeElement(client);
@@ -29,7 +29,7 @@ public class ChatServer
 		}
 	}
 	
-	public void addClient(ChatThread client)
+	public void addClient(ChatThread2 client)
 	{
 		synchronized(clientVector) {
 			clientVector.addElement(client);
@@ -40,7 +40,7 @@ public class ChatServer
 	{
 		ServerSocket myServerSocket = null;
 		
-		ChatServer myServer = new ChatServer();		//1) 현재 ChatServer자체 생성하여 --> myServer 객체명으로 사용
+		ChatServer2 myServer = new ChatServer2();		//1) 현재 ChatServer자체 생성하여 --> myServer 객체명으로 사용
 		
 		try {
 			myServerSocket = new ServerSocket(2587);
@@ -58,7 +58,7 @@ public class ChatServer
 			//서버는 무한루프 돌기
 			while(true) {
 				//myServer라는 서버와 myServerSocket.accept() 로 서버가 ChatThread에서 기다린다.
-				ChatThread client = new ChatThread(myServer, myServerSocket.accept());
+				ChatThread2 client = new ChatThread2(myServer, myServerSocket.accept());
 					//(서버, 소캣)로 생성하여 --> client객체명
 				//ChatThread 클래스의 run()메소드 실행함
 				client.start();		//서버는 run()으로 실행하고, 클라이언트가 접속시 아래쪽 명령 수행
