@@ -83,7 +83,7 @@ public class JDBCProstep11 implements ActionListener {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setTitle("\uACE0\uAC1D\uAD00\uB9AC\uD504\uB85C\uADF8\uB7A8");
-		frame.setBounds(100, 100, 544, 388);
+		frame.setBounds(100, 100, 960, 550);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
