@@ -8,6 +8,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import java.awt.ScrollPane;
+import javax.swing.JScrollPane;
+import javax.swing.ImageIcon;
 
 public class fDepositOrder implements ActionListener {
 
@@ -22,6 +25,13 @@ public class fDepositOrder implements ActionListener {
 	static String customer_dist[] = { "개인고객", "기업고객" };
 	Object columnName[] = { "계좌번호", "예금상품명", "고객번호", "고객명", "개설일" };
 	Object dataTable[][] = null;
+	private JTable table;
+	
+	
+	//String query ="select A_NO, A_ITEM_NAME, C_NO, C_NAME, A_DATE from account, customer where A_ITEM_DIST = 'A0' order by A_NO desc"
+	
+	//for(int i=0; i<customer_dist.length; i++) { jcb2.addItem(customer_dist[i])
+	
 	
 	/**
 	 * Launch the application.
@@ -57,18 +67,22 @@ public class fDepositOrder implements ActionListener {
 		frame.getContentPane().setLayout(null);
 		
 		btnInsertItem = new JButton("");
+		btnInsertItem.setIcon(new ImageIcon("C:\\GitHub\\ArdorForLife\\Hello2\\TOOLBAR\\INSERT.GIF"));
 		btnInsertItem.setBounds(10, 10, 30, 30);
 		frame.getContentPane().add(btnInsertItem);
 		
 		btnSaveItem = new JButton("");
+		btnSaveItem.setIcon(new ImageIcon("C:\\GitHub\\ArdorForLife\\Hello2\\TOOLBAR\\SAVE.GIF"));
 		btnSaveItem.setBounds(50, 10, 30, 30);
 		frame.getContentPane().add(btnSaveItem);
 		
 		btnPrintItem = new JButton("");
+		btnPrintItem.setIcon(new ImageIcon("C:\\GitHub\\ArdorForLife\\Hello2\\TOOLBAR\\PRINT.GIF"));
 		btnPrintItem.setBounds(90, 10, 30, 30);
 		frame.getContentPane().add(btnPrintItem);
 		
 		btnCloseWindow = new JButton("");
+		btnCloseWindow.setIcon(new ImageIcon("C:\\GitHub\\ArdorForLife\\Hello2\\TOOLBAR\\EXIT.GIF"));
 		btnCloseWindow.setBounds(130, 10, 30, 30);
 		frame.getContentPane().add(btnCloseWindow);
 		
@@ -97,44 +111,60 @@ public class fDepositOrder implements ActionListener {
 		frame.getContentPane().add(lblNewLabel_5);
 		
 		jcb1 = new JComboBox();
-		jcb1.setBounds(81, 54, 30, 21);
+		jcb1.setBounds(81, 54, 114, 21);
 		frame.getContentPane().add(jcb1);
 		
 		jcb2 = new JComboBox();
-		jcb2.setBounds(81, 96, 30, 21);
+		jcb2.setBounds(81, 96, 114, 21);
 		frame.getContentPane().add(jcb2);
 		
 		jcb3 = new JComboBox();
-		jcb3.setBounds(81, 180, 30, 21);
+		jcb3.setBounds(81, 180, 114, 21);
 		frame.getContentPane().add(jcb3);
 		
 		tf1 = new JTextField();
-		tf1.setBounds(81, 138, 116, 21);
+		tf1.setBounds(81, 138, 158, 21);
 		frame.getContentPane().add(tf1);
 		tf1.setColumns(10);
 		
 		tf2 = new JTextField();
-		tf2.setBounds(81, 222, 116, 21);
+		tf2.setBounds(81, 222, 158, 21);
 		frame.getContentPane().add(tf2);
 		tf2.setColumns(10);
 		
 		tf3 = new JTextField();
-		tf3.setBounds(81, 264, 116, 21);
+		tf3.setBounds(81, 264, 158, 21);
 		frame.getContentPane().add(tf3);
 		tf3.setColumns(10);
 		
-		jtAccountList = new JTable();
-		jtAccountList.setBounds(12, 310, 897, 160);
-		frame.getContentPane().add(jtAccountList);
-		
-		lbStatusMessage = new JLabel("New label");
-		lbStatusMessage.setBounds(12, 490, 57, 15);
+		lbStatusMessage = new JLabel("");
+		lbStatusMessage.setBounds(12, 490, 920, 15);
 		frame.getContentPane().add(lbStatusMessage);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 299, 922, 181);
+		frame.getContentPane().add(scrollPane);
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
+		
+		btnInsertItem.addActionListener(this);
+		btnSaveItem.addActionListener(this);
+		btnPrintItem.addActionListener(this);
+		btnCloseWindow.addActionListener(this);
+		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		if(e.getSource()==btnInsertItem) {
+		}
+		else if(e.getSource()==btnSaveItem) {
+		}
+		else if(e.getSource()==btnPrintItem) {
+		}
+		else if(e.getSource()==btnCloseWindow) {
+			System.exit(0);
+		}
 	}
 }
