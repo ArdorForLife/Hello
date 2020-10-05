@@ -11,11 +11,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-public class fCustomer implements ActionListener {
+public class fCustomer extends JInternalFrame implements ActionListener {
 
 	private JFrame frame;
 	private JTextField tf1, tf2, tf3, tf4;
@@ -41,18 +42,13 @@ public class fCustomer implements ActionListener {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					fCustomer window = new fCustomer();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	// JInternalFrame 이 되면서 main을 삭제해야함
+	/*
+	 * public static void main(String[] args) { EventQueue.invokeLater(new
+	 * Runnable() { public void run() { try { fCustomer window = new fCustomer();
+	 * window.this.setVisible(true); } catch (Exception e) { e.printStackTrace(); }
+	 * } }); }
+	 */
 
 	/**
 	 * Create the application.
@@ -83,53 +79,54 @@ public class fCustomer implements ActionListener {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialize the contents of the this.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setTitle("\uACE0\uAC1D\uAD00\uB9AC");
-		frame.setBounds(100, 100, 960, 550);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		// JFrame을 주석처리
+		// frame = new JFrame();
+		this.setTitle("\uACE0\uAC1D\uAD00\uB9AC");
+		this.setBounds(10, 10, 960, 550);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.getContentPane().setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("\uACE0\uAC1D\uBC88\uD638");
 		lblNewLabel.setBounds(10, 60, 57, 15);
-		frame.getContentPane().add(lblNewLabel);
+		this.getContentPane().add(lblNewLabel);
 
 		JLabel lblNewLabel_1 = new JLabel("\uACE0\uAC1D\uC774\uB984");
 		lblNewLabel_1.setBounds(10, 101, 57, 15);
-		frame.getContentPane().add(lblNewLabel_1);
+		this.getContentPane().add(lblNewLabel_1);
 
 		JLabel lblNewLabel_2 = new JLabel("\uC8FC\uC18C");
 		lblNewLabel_2.setBounds(10, 142, 57, 15);
-		frame.getContentPane().add(lblNewLabel_2);
+		this.getContentPane().add(lblNewLabel_2);
 
 		JLabel lblNewLabel_3 = new JLabel("\uC804\uD654\uBC88\uD638");
 		lblNewLabel_3.setBounds(10, 183, 57, 15);
-		frame.getContentPane().add(lblNewLabel_3);
+		this.getContentPane().add(lblNewLabel_3);
 
 		JLabel lblNewLabel_4 = new JLabel("\uACE0\uAC1D\uAD6C\uBD84");
 		lblNewLabel_4.setBounds(10, 224, 57, 15);
-		frame.getContentPane().add(lblNewLabel_4);
+		this.getContentPane().add(lblNewLabel_4);
 
 		tf1 = new JTextField();
 		tf1.setBounds(79, 57, 116, 21);
-		frame.getContentPane().add(tf1);
+		this.getContentPane().add(tf1);
 		tf1.setColumns(10);
 
 		tf2 = new JTextField();
 		tf2.setBounds(79, 98, 116, 21);
-		frame.getContentPane().add(tf2);
+		this.getContentPane().add(tf2);
 		tf2.setColumns(10);
 
 		tf3 = new JTextField();
 		tf3.setBounds(79, 139, 241, 21);
-		frame.getContentPane().add(tf3);
+		this.getContentPane().add(tf3);
 		tf3.setColumns(10);
 
 		tf4 = new JTextField();
 		tf4.setBounds(79, 180, 116, 21);
-		frame.getContentPane().add(tf4);
+		this.getContentPane().add(tf4);
 		tf4.setColumns(10);
 
 		jcb1 = new JComboBox();
@@ -137,52 +134,52 @@ public class fCustomer implements ActionListener {
 			jcb1.addItem(customer_dist[i]);
 		}
 		jcb1.setBounds(79, 221, 116, 21);
-		frame.getContentPane().add(jcb1);
+		this.getContentPane().add(jcb1);
 
 		btnMoveFirst = new JButton("");
 		btnMoveFirst.setIcon(new ImageIcon("C:\\GitHub\\ArdorForLife\\Hello2\\TOOLBAR\\FIRST.GIF"));
 		btnMoveFirst.setBounds(10, 10, 30, 30);
-		frame.getContentPane().add(btnMoveFirst);
+		this.getContentPane().add(btnMoveFirst);
 
 		btnMovePrev = new JButton("");
 		btnMovePrev.setIcon(new ImageIcon("C:\\GitHub\\ArdorForLife\\Hello2\\TOOLBAR\\PREV.GIF"));
 		btnMovePrev.setBounds(50, 10, 30, 30);
-		frame.getContentPane().add(btnMovePrev);
+		this.getContentPane().add(btnMovePrev);
 
 		btnMoveNext = new JButton("");
 		btnMoveNext.setIcon(new ImageIcon("C:\\GitHub\\ArdorForLife\\Hello2\\TOOLBAR\\NEXT.GIF"));
 		btnMoveNext.setBounds(90, 10, 30, 30);
-		frame.getContentPane().add(btnMoveNext);
+		this.getContentPane().add(btnMoveNext);
 
 		btnMoveLast = new JButton("");
 		btnMoveLast.setIcon(new ImageIcon("C:\\GitHub\\ArdorForLife\\Hello2\\TOOLBAR\\LAST.GIF"));
 		btnMoveLast.setBounds(130, 10, 30, 30);
-		frame.getContentPane().add(btnMoveLast);
+		this.getContentPane().add(btnMoveLast);
 
 		btnInsertItem = new JButton("");
 		btnInsertItem.setIcon(new ImageIcon("C:\\GitHub\\ArdorForLife\\Hello2\\TOOLBAR\\INSERT.GIF"));
 		btnInsertItem.setBounds(170, 10, 30, 30);
-		frame.getContentPane().add(btnInsertItem);
+		this.getContentPane().add(btnInsertItem);
 
 		btnDeleteItem = new JButton("");
 		btnDeleteItem.setIcon(new ImageIcon("C:\\GitHub\\ArdorForLife\\Hello2\\TOOLBAR\\DELETE.GIF"));
 		btnDeleteItem.setBounds(210, 10, 30, 30);
-		frame.getContentPane().add(btnDeleteItem);
+		this.getContentPane().add(btnDeleteItem);
 
 		btnSaveItem = new JButton("");
 		btnSaveItem.setIcon(new ImageIcon("C:\\GitHub\\ArdorForLife\\Hello2\\TOOLBAR\\SAVE.GIF"));
 		btnSaveItem.setBounds(250, 10, 30, 30);
-		frame.getContentPane().add(btnSaveItem);
+		this.getContentPane().add(btnSaveItem);
 
 		btnPrintItem = new JButton("");
 		btnPrintItem.setIcon(new ImageIcon("C:\\GitHub\\ArdorForLife\\Hello2\\TOOLBAR\\PRINT.GIF"));
 		btnPrintItem.setBounds(290, 10, 30, 30);
-		frame.getContentPane().add(btnPrintItem);
+		this.getContentPane().add(btnPrintItem);
 
 		btnCloseWindow = new JButton("");
 		btnCloseWindow.setIcon(new ImageIcon("C:\\GitHub\\ArdorForLife\\Hello2\\TOOLBAR\\EXIT.GIF"));
 		btnCloseWindow.setBounds(330, 10, 30, 30);
-		frame.getContentPane().add(btnCloseWindow);
+		this.getContentPane().add(btnCloseWindow);
 
 		btnMoveFirst.addActionListener(this);
 		btnMovePrev.addActionListener(this);
@@ -393,7 +390,7 @@ public class fCustomer implements ActionListener {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		frame.dispose();
+		this.dispose();
 	}
 
 }

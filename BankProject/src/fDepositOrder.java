@@ -142,7 +142,7 @@ public class fDepositOrder implements ActionListener {
 		frame.getContentPane().add(lbStatusMessage);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 299, 922, 181);
+		scrollPane.setBounds(10, 299, 773, 181);
 		frame.getContentPane().add(scrollPane);
 		
 		table = new JTable();
